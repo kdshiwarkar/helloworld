@@ -11,24 +11,24 @@ pipeline {
                 sh 'mvn install'
             }
         }
-        stage('Docker build') {
+        stage('podman build') {
             steps {
-                sh 'docker build -f Dockerfile -t tomcat:02 .'
+                sh 'podman build -f Dockerfile -t tomcat:02 .'
             }
         }
         stage('tag to given image') {
             steps {
-                sh 'docker tag tomcat:02 docker.io/kunalsh/tomcat:02'
+                sh 'podman tag tomcat:02 docker.io/kunalsh/tomcat:02'
             }
         }
         stage('docker login') {
             steps {
-                sh 'docker login docker.io -u kunalsh -p Kunnu@2404'
+                sh 'podman login docker.io -u kunalsh -p Kunnu@2404'
             }
         }
         stage('image push into dockerhub') {
             steps {
-                sh 'docker push docker.io/kunalsh/tomcat:02'
+                sh 'podman push docker.io/kunalsh/tomcat:02'
             }
         }
     }
